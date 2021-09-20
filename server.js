@@ -17,11 +17,6 @@ server.get('/', (request,response) => {
     response.status(200).send('Welcome to the home page');
 })
 
-server.listen(PORT,()=> {
-    console.log(`Listening on PORT ${PORT}`);
-})
-
-
 
 server.get('/location',(request,response)=>{
     try {
@@ -72,3 +67,9 @@ function Error(error, request, response) {
     response.status(500).send({'Status': 500,responseText:'sorry something went wrong'});
 
   };
+
+server.listen(PORT,()=> {
+    console.log(`Listening on PORT ${PORT}`);
+})
+
+
