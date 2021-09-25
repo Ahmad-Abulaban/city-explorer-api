@@ -1,23 +1,20 @@
 const axios = require("axios");
-
+let cacheMemory = {};
 function handleMovie(request, response) {
-
-    try{
     let { searchQuery} = request.query;
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${searchQuery}`;
-
-
+    if (cacheMemory[searchQuery] !== undefined) {
+        response.send(cacheMemory[searchQuery]);
+    } else {
+    try{
     axios.get(url).then(results => {
         const moviesArray = results.data.results.map(movie => new Movie(movie));
+        cacheMemory[searchQuery] = moviesArray;
         response.status(200).send(moviesArray);
     })
 } catch(error){
     console.log('somethink happend', error);
-}
-
-}
-
-
+}}}
 class Movie{
     constructor(movie){
         this.title = movie.title;
