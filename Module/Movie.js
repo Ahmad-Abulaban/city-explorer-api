@@ -4,8 +4,10 @@ function handleMovie(request, response) {
     let { searchQuery} = request.query;
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${searchQuery}`;
     if (cacheMemory[searchQuery] !== undefined) {
+        console.log('the cashe contain data ')
+        console.log(cacheMemory);
         response.send(cacheMemory[searchQuery]);
-    } else {
+    } else { console.log('cache memory is empty hit the api')
     try{
     axios.get(url).then(results => {
         const moviesArray = results.data.results.map(movie => new Movie(movie));
